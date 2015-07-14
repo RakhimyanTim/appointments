@@ -14,7 +14,8 @@ $(document).ready(function() {
     cal.fullCalendar({
         defaultView: "agendaWeek",
         weekends: false,
-        googleCalendarApiKey: 'AIzaSyBJeKLbF9BJ1-NP0RQOXF68sU6OxUkVQgI',
+        businessHours: true,
+        googleCalendarApiKey: 'AIzaSyBmErR1--htDymI-t_1CPVT7gfgg8K0yRE',
         events: {
             googleCalendarId: 'hsctc.org_cnp6o1rqeh2fabeg46v57oa5mo@group.calendar.google.com'
         },
@@ -34,9 +35,7 @@ $(document).ready(function() {
         return false;
     }
     
-    // Remove event from 'appointments' Google cal,
-    // Add event to 'scheduled' Google cal.
-    // Rerender the fullCalendar.
+    // Make call to Google Apps Script on submit.
     form.on('submit', function() {
         // make sure the start and end times are set
         if (!(start && end)) {
@@ -44,24 +43,16 @@ $(document).ready(function() {
             return;
         }
         // the url of my Google Apps Script, along with the GET vars.
-        var host = 'https://script.google.com/a/macros/hsctc.org/s/'
-            + 'AKfycbywf-reXIbN_AA6VZuHdIcSc6NIhG6F-gM1Gl3gTSImFzmYSF_A/exec'
-            + '?start=' + start + '&end=' + end + '&' + form.serialize();
-        $.get(host, function(data) {
-            if (data.rem_success == false) {
-                alert("An error occurred.. could not remove event from " +
-                    "appointments calendar (Google Apps Script error).");
-                console.log("Unsuccessful removal of appointment :(");
-            } else if (data.crt_success == false) {
-                alert("An error occurred.. could not create scheduled " +
-                    "appointment in calendar (Google Apps Script error).");
-                console.log("Unsuccessful addition of appointment :(");
-            } else {
-                console.log("Successful appointment booking!");
+        var proxy = 'proxy.php?start=' + start + '&end=' + end + '&' + form.serialize();
+        console.log('proxy url: ' + proxy);
+        // expect a response with 'suc' and 'msg' fields.
+        $.get(proxy, function(data) {
+            if (data.suc == false) {
+                alert(data.msg);
             }
-        });
+            document.location.reload();
+        }, 'json' );
         mod.modal('hide');
-        document.location.reload();
         return false;
     });
 });
