@@ -1,7 +1,7 @@
 <?php
 
-$host = 'https://script.google.com/macros/s/AKfycbyD-AO9qTpvDhLdadZl_YU9Xec0n3YkOZwteAE3qWMNLIDcV6SU/exec'
-        . '?' . http_build_query($_GET);
+$app = 'https://script.google.com/macros/s/AKfycbyD-AO9qTpvDhLdadZl_YU9Xec0n3YkOZwteAE3qWMNLIDcV6SU/exec';
+$host = $app . '?' . http_build_query($_GET);
 
 file_put_contents('proxy.log', $host, FILE_APPEND);
 
