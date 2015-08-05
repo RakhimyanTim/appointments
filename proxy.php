@@ -1,14 +1,9 @@
 <?php
 
-$app = '';
-switch ($_GET['navigator']) {
-    case 'Carsten':
-        $app .= 'https://script.google.com/macros/s/AKfycbyD-AO9qTpvDhLdadZl_YU9Xec0n3YkOZwteAE3qWMNLIDcV6SU/exec';
-        break;
-    case 'Bob':
-        $app .= 'https://script.google.com/macros/s/AKfycbwwc7wQt8u6-4cPwNWd12sGUIOPYxptEocEVFxPavt91AGDXKI/exec';
-        break;
-}
+include 'users.php';
+
+$nav = $_GET['navigator'];
+$app = $users[$nav];
 
 $host = $app . '?' . http_build_query($_GET);
 

@@ -1,10 +1,5 @@
 $(document).ready(function() {
 
-    // setup a timeout to handle errors on 
-    $.ajaxSetup({
-        timeout: 1000
-    });
-
     // Important DOM elements
     var cal = $('#calendar');
     var mod = $('#inputModal');
