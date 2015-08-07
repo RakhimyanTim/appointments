@@ -1,5 +1,6 @@
 function doGet(e) {
   // It's up to client to make sure all these are defined...
+  var navigator = e.parameter.navigator;
   var first_name = e.parameter.first_name;
   var last_name = e.parameter.last_name;
   var email = e.parameter.email;
@@ -35,7 +36,7 @@ function doGet(e) {
   }
   
   // Try to book new appointment
-  var c = createBooking(start, end, email);
+  var c = createBooking(first_name + ' ' + last_name, start, end, email);
   // On error
   if (!c) {
     db_info.push("Error creating booking.");
@@ -46,6 +47,7 @@ function doGet(e) {
   // On success
   db_info.push("Successfully created booking!");
   log_ok(db_info);
+  log.appendRow([now, navigator, start, first_name, last_name, email, phone]);
   return response(true, 'Success!');
     
 }

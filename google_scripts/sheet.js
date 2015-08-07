@@ -1,8 +1,7 @@
 // VARS
-
 // The spreadsheet associated with this app.
-var ss = SpreadsheetApp.openById("1ioGq9sh4EdYnqR-pQREwThEmG02c3AdZgNHXY4n6tZA");
-// Some importand sheets.
+var ss = SpreadsheetApp.openByUrl(manager_url);
+// Some important sheets.
 var log = ss.getSheetByName("Log");
 var debug = ss.getSheetByName("Debug");
 

@@ -62,6 +62,8 @@ $(document).ready(function() {
             success: function(data) {
                 if (data.suc == false) {
                     alert(data.msg);
+                } else {
+                    alert("Successfully booked appointment!");
                 }
                 document.location.reload();
             },

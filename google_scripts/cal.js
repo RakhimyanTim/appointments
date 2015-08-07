@@ -26,16 +26,16 @@ function findUniqueEvent(cal, start, end) {
 
 // Return true on a successful booking, and false
 // on an error.
-function createBooking(start, end, email) {
+function createBooking(name, start, end, email) {
   var e = bookedCal.createEvent(
-    'Health Insurance Appointment',
+    name,
     start,
     end,
     {
-      description: "A health insurance meeting with Cassandra Aikman",
+      description: "A health insurance meeting.",
       location: "HSCTC office",
       guests: email,
-      sendInvites: false
+      sendInvites: true
     }
   );
   if (e) {
@@ -46,15 +46,18 @@ function createBooking(start, end, email) {
 }
 
 function getOpenAppsCal() {
-  var cal = CalendarApp.getCalendarsByName('Open Appointment Slots');
-  if (cal.length != 1)
-    return undefined;
-  return cal[0];
+  return CalendarApp.getCalendarById(open_cal_id);
 }
 
 function getBookedCal() {
-  var cal = CalendarApp.getCalendarsByName('Scheduled Appointment Slots');
-  if (cal.length != 1)
-    return undefined;
-  return cal[0];
+  return CalendarApp.getCalendarById(booked_cal_id);
+}
+
+
+// Removes old appointment slots so they can't be booked
+function removeOldApps() {
+  var rem = appsCal.getEvents(new Date(0), new Date());
+  for (var i = 0; i < rem.length; i++) {
+    rem[i].deleteEvent();
+  }
 }
